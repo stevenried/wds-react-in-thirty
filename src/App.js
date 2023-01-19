@@ -1,36 +1,19 @@
 import React, { useState } from 'react'
+import NewTodo from './NewTodo'
 import TodoList from './TodoList'
 
 function App() {
   const [todos, setTodos] = useState([])
-  const [descriptionValue, setDescriptionValue] = useState('')
 
-  function descriptionChangeHandler(event) {
-    setDescriptionValue(event.target.value)
-  }
-
-  function addTodoHandler(event) {
-    const description = descriptionValue
-    if (description === '') return
-
-    setTodos((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), desc: description, isComplete: false },
-    ])
-
-    setDescriptionValue('')
+  function newTodoHandler(newTodoData) {
+    setTodos((prevTodos) => [...prevTodos, newTodoData])
   }
 
   return (
     <>
+      <h1>Todo List</h1>
       <TodoList todos={todos} />
-      <input
-        value={descriptionValue}
-        onChange={descriptionChangeHandler}
-        type="text"
-      />
-      <button onClick={addTodoHandler}>Add Todo</button>
-      <button>Clear Completed</button>
+      <NewTodo onNewTodo={newTodoHandler} />
       <div>0 Todos left</div>
     </>
   )
